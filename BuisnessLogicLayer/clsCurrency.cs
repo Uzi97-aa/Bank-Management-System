@@ -13,12 +13,13 @@ namespace BuisnessLogicLayer
 
         public enum enMode { Add=1,Update=2}
         enMode Mode = enMode.Add;
+        public int CurrencyID { get; set; }
         public string CurrencyCode { get; set; }
         public string Name { get; set; }
         public string Symbol { get; set; }
         public bool IsActive { get; set; }
 
-        public CurrenciesDTO CDTO { get { return new CurrenciesDTO(this.CurrencyCode, this.Name, this.Symbol, this.IsActive); } }
+        public CurrenciesDTO CDTO { get { return new CurrenciesDTO(this.CurrencyID, this.CurrencyCode, this.Name, this.Symbol, this.IsActive); } }
 
 
         public clsCurrency(CurrenciesDTO CDTO, enMode Mode=enMode.Add)
@@ -33,9 +34,9 @@ namespace BuisnessLogicLayer
         }
 
 
-        public clsCurrency FindCurrency(string CurrencyCode)
+        public clsCurrency FindCurrency(int CurrencyID)
         {
-            CurrenciesDTO CDTO = clsCurrencies.Find(CurrencyCode);
+            CurrenciesDTO CDTO = clsCurrencies.Find(CurrencyID);
             if (CDTO != null)
             {
                 return new clsCurrency(CDTO, enMode.Update);
@@ -65,7 +66,7 @@ namespace BuisnessLogicLayer
 
         static public bool DeActivate(CurrenciesDTO CDTO)
         {
-            return clsCurrencies.DeactivateCurrency(CDTO.CurrencyCode);
+            return clsCurrencies.DeactivateCurrency(CDTO.CurrencyID);
         }
 
 

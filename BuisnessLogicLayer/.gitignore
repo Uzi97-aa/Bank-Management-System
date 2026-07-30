@@ -13,8 +13,6 @@ obj/
 Debug/
 Release/
 
-# NuGet packages
-packages/
 
 # Logs
 *.log

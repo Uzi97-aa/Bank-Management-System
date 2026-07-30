@@ -15,14 +15,15 @@ namespace DataBankLayer
     public class clsCustomers
     {
 
-        static public string ConnectionString = "Server=.,Database=BankSystem,Username=sa,Password=sa123456";
+        static public string ConnectionString ="Server=localhost;Database=BankSystem;User Id=sa;Password=sa123456;Encrypt=False;TrustServerCertificate=True;Connection Timeout=30;";
+
 
         static public List<CustomerDTO> GetAllCustomers()
         {
             List<CustomerDTO> customers = new List<CustomerDTO>();
             try
             {
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                using (SqlConnection connection = new SqlConnection(clsConnection.ConnectionString))
                 {
                     connection.Open();
                     using (SqlCommand Command = new SqlCommand("sp_Customers_GetAll", connection))
@@ -65,7 +66,7 @@ namespace DataBankLayer
         }
 
 
-        static public CustomerDTO GetCustomerByID(long CustomerID)
+        static public CustomerDTO GetCustomerByID(int CustomerID)
         {
             CustomerDTO customer = null;
             try
@@ -110,28 +111,29 @@ namespace DataBankLayer
 
         static public int AddNewCustomer(CustomerDTO CTDO)
         {
-            int RowEffect = 0;
+            int RowEffect = -1;
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                using (SqlConnection connection = new SqlConnection(clsConnection.ConnectionString))
                 {
+                    connection.Open();
                     using (SqlCommand Comand = new SqlCommand("sp_Customers_Create", connection))
                     {
-                        connection.Open();
+                        
                         Comand.CommandType = CommandType.StoredProcedure;
                         Comand.Parameters.AddWithValue("@FirstName", CTDO.FirstName);
                         Comand.Parameters.AddWithValue("@SecondName", CTDO.SecondName);
-                        Comand.Parameters.AddWithValue("@ThirdName", CTDO.ThirdName);
+                        Comand.Parameters.AddWithValue("@ThirdName", CTDO.ThirdName ?? (object)DBNull.Value);
                         Comand.Parameters.AddWithValue("@LastName", CTDO.LastName);
                         Comand.Parameters.AddWithValue("@Gender", CTDO.Gender);
                         Comand.Parameters.AddWithValue("@DateOfBirth", CTDO.DateOfBirth);
                         Comand.Parameters.AddWithValue("@NationalID", CTDO.NationalID);
-                        Comand.Parameters.AddWithValue("@Phone", CTDO.Phone);
-                        Comand.Parameters.AddWithValue("@Address", CTDO.Address);
-                        Comand.Parameters.AddWithValue("@Email", CTDO.Email);
+                        Comand.Parameters.AddWithValue("@Phone", CTDO.Phone ?? (object)DBNull.Value);
+                        Comand.Parameters.AddWithValue("@Address", CTDO.Address ?? (object)DBNull.Value);
+                        Comand.Parameters.AddWithValue("@Email", CTDO.Email ?? (object)DBNull.Value);
 
-                        var outputIdParam = new SqlParameter("@CustomerID", SqlDbType.BigInt)
+                        var outputIdParam = new SqlParameter("@CustomerID", SqlDbType.Int)
                         {
                             Direction = ParameterDirection.Output
                         };
@@ -139,9 +141,10 @@ namespace DataBankLayer
 
                         
 
-                        RowEffect = Comand.ExecuteNonQuery();
+                        Comand.ExecuteNonQuery();
 
-                        return RowEffect;
+                        return (int)outputIdParam.Value;
+
 
                     }
                 }
@@ -149,10 +152,12 @@ namespace DataBankLayer
 
             catch (Exception ex)
             {
-
+                
+                Console.WriteLine("An error occurred: " + ex.Message);
 
             }
-            return RowEffect;
+             return RowEffect; 
+            
         }
 
         static public bool UpdateCustomer(CustomerDTO CDTO)

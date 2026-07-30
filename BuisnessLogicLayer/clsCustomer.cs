@@ -58,11 +58,21 @@ namespace BuisnessLogicLayer
 
        
 
+     static   public clsCustomer Find(int ID)
+        {
+            CustomerDTO CDTO = clsCustomers.GetCustomerByID(ID);
+            if (CDTO == null)
+            {
+                return null;
+            }
+            return new clsCustomer(CDTO);
+        }
+
         private bool AddNew()
         {
             this.CustomerID = clsCustomers.AddNewCustomer(CDTO);
 
-            return this.CustomerID != -1;
+            return (this.CustomerID != -1);
         }
 
         private bool Update()
@@ -78,10 +88,17 @@ namespace BuisnessLogicLayer
                 case enMode.AddNew:
 
                     if (AddNew())
-                    
+                    {
+
                         Mode = enMode.Update;
                         return true;
-                    
+                    }
+
+                    else
+                    {
+                        return false;
+                    }
+
                 case enMode.Update:
 
                     return Update();

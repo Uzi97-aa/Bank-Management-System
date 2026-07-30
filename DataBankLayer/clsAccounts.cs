@@ -73,17 +73,18 @@ namespace DataBankLayer
                 {
                     using (SqlCommand cmd = new SqlCommand("sp_Accounts_OpenAccount", conn))
                     {
+                        conn.Open();
                         cmd.CommandType = CommandType.StoredProcedure;
 
                         cmd.Parameters.AddWithValue("@CustomerID", account.CustomerID);
                         cmd.Parameters.AddWithValue("@BranchID", account.BranchID);
                         cmd.Parameters.AddWithValue("@AccountNumber", account.AccountNumber);
                         cmd.Parameters.AddWithValue("@AccountType", account.AccountType);
-                        cmd.Parameters.AddWithValue("@CurrencyCode", account.CurrencyCode);
+                        cmd.Parameters.AddWithValue("@CurrencyID", account.CurrencyID);
                         cmd.Parameters.AddWithValue("@Status", account.Status);
                         cmd.Parameters.AddWithValue("@IsDeleted", account.IsDeleted);
 
-                        conn.Open();
+                       
 
                         // Get newly created ID
                         row= Convert.ToInt32(cmd.ExecuteScalar());
@@ -187,7 +188,7 @@ namespace DataBankLayer
                 (int)reader["BranchID"],
                 reader["AccountNumber"].ToString(), 
                 (byte)reader["AccountType"],
-                reader["CurrencyCode"].ToString(),
+                (int)reader["CurrencyID"],
                 (byte)reader["Status"],
                 (bool)reader["IsDeleted"], (DateTime)reader["CreatedAt"],
                 (byte[])reader["Row_Version"]

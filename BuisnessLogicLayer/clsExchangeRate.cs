@@ -13,8 +13,8 @@ namespace BuisnessLogicLayer
         enMode Mode = enMode.Add;
 
         public int RateID { get; set; }
-        public string FromCurrencyCode { get; set; }
-        public string ToCurrencyCode { get; set; }
+        public int FromCurrencyCode { get; set; }
+        public int ToCurrencyCode { get; set; }
         public double Rate { get; set; }
         public DateTime EffectiveDate { get; set; }
         public DateTime CreatedAt { get; }
@@ -64,17 +64,18 @@ namespace BuisnessLogicLayer
             switch (Mode)
             {
                 case enMode.Add:
-                    if (AddNewExchangeRate())
-                    
-                        Mode = enMode.Update;
-                        return true;
-                    
-                    
+                    if (AddNewExchangeRate()) { 
+
+                    Mode = enMode.Update;
+                    return true; }
+                    else {  return false; }
+
+
                 case enMode.Update:
-                    return UpdateExchangeRate();
-                default:
-                    return false;
-            }
+                            return UpdateExchangeRate();
+                        default:
+                            return false;
+                        }
         }
 
         public static List<ExchangeRateDTO> GetAll()
@@ -82,7 +83,7 @@ namespace BuisnessLogicLayer
             return clsExchangeRates.GetAll();
         }
 
-        public static List<ExchangeRateDTO> GetLatest(string fromCurrencyCode, string toCurrencyCode)
+        public static List<ExchangeRateDTO> GetLatest(int fromCurrencyCode, int toCurrencyCode)
         {
             return clsExchangeRates.GetLatest(fromCurrencyCode, toCurrencyCode);
         }

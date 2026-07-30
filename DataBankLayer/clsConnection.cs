@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Configuration;
 namespace DataBankLayer
 {
     public class clsConnection
     {
 
-        static public string ConnectionString = "Server=.,Database=BankSystem,Username=sa,Password=sa123456";
-
+        public static string ConnectionString { get { return ConfigurationManager.ConnectionStrings["connectionstring"].ConnectionString; } }
 
     }
 }

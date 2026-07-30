@@ -19,7 +19,7 @@ namespace BuisnessLogicLayer
         public int BranchID { get; set; }
         public string AccountNumber { get; set; }
         public byte AccountType { get; set; }
-        public string CurrencyCode { get; set; }
+        public int CurrencyID { get; set; }
         public byte Status { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime CreatedAt { get; private set; }
@@ -31,7 +31,7 @@ namespace BuisnessLogicLayer
             get
             {
             return new AccountsDTO(this.AccountID, this.CustomerID, this.BranchID, this.AccountNumber, this.AccountType
-            ,this.CurrencyCode, this.Status, this.IsDeleted, this.CreatedAt, this.Row_Version);
+            ,this.CurrencyID, this.Status, this.IsDeleted, this.CreatedAt, this.Row_Version);
             }
         }
 
@@ -43,7 +43,7 @@ namespace BuisnessLogicLayer
             this.BranchID = ADTO.BranchID;
             this.AccountNumber = ADTO.AccountNumber;
             this.AccountType = ADTO.AccountType;
-            this.CurrencyCode = ADTO.CurrencyCode;
+            this.CurrencyID = ADTO.CurrencyID;
             this.Status = ADTO.Status;
             this.IsDeleted = ADTO.IsDeleted;
             this.CreatedAt = ADTO.CreatedAt;
@@ -69,17 +69,19 @@ namespace BuisnessLogicLayer
             switch (Mode)
             {
                 case enMode.Add:
-                    if (OpenAccount())
-                    
-                        Mode=enMode.Update;
-                        return true;
-                    
-                    
+                    if (OpenAccount()) { 
+
+                    Mode = enMode.Update;
+                    return true; }
+                    else
+                    {
+                        return false;
+                    }
                 case enMode.Update:
-                    return UpdateAccount();
-                default:
-                    return false;
-            }
+                            return UpdateAccount();
+                        default:
+                            return false;
+                        }
             
         }
 

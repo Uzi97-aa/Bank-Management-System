@@ -9,10 +9,6 @@ using static SharedClass.clsShared;
 namespace DataBankLayer
 {
 
-  
-
-
-
     public class clsBranchs
     {
 

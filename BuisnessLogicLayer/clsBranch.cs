@@ -54,12 +54,18 @@ namespace BuisnessLogicLayer
             {
                 case enMode.create:
                     if (CreateBranch())
+                    {
                         Mode = enMode.Update;
-                    return true;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
                 case enMode.Update:
-                    return UpdateBranch();
-            }
+                            return UpdateBranch();
+                        }
             return false;
         }
 

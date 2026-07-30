@@ -13,7 +13,7 @@ namespace DataBankLayer
     public class clsExchangeRates
     {
 
-        public static List<ExchangeRateDTO> GetLatest(string fromCurrencyCode, string toCurrencyCode)
+        public static List<ExchangeRateDTO> GetLatest(int fromCurrencyCode, int toCurrencyCode)
         {
             List<ExchangeRateDTO> list = new List<ExchangeRateDTO>();
 
@@ -34,8 +34,8 @@ namespace DataBankLayer
                         {
                             list.Add(new ExchangeRateDTO(
                                 reader.GetInt32(reader.GetOrdinal("RateID")),
-                                reader.GetString(reader.GetOrdinal("FromCurrencyCode")),
-                                reader.GetString(reader.GetOrdinal("ToCurrencyCode")),
+                                reader.GetInt32(reader.GetOrdinal("FromCurrencyCode")),
+                                reader.GetInt32(reader.GetOrdinal("ToCurrencyCode")),
                                 reader.GetDouble(reader.GetOrdinal("Rate")),
                                 reader.GetDateTime(reader.GetOrdinal("EffectiveDate")),
                                 reader.GetDateTime(reader.GetOrdinal("CreatedAt"))
@@ -53,7 +53,7 @@ namespace DataBankLayer
 
 
 
-        public static List<ExchangeRateDTO> GetByPair(string fromCurrencyCode, string toCurrencyCode)
+        public static List<ExchangeRateDTO> GetByPair(int fromCurrencyCode, int toCurrencyCode)
         {
             List<ExchangeRateDTO> list = new List<ExchangeRateDTO>();
 
@@ -74,8 +74,8 @@ namespace DataBankLayer
                         {
                             list.Add(new ExchangeRateDTO(
                                 reader.GetInt32(reader.GetOrdinal("RateID")),
-                                reader.GetString(reader.GetOrdinal("FromCurrencyCode")),
-                                reader.GetString(reader.GetOrdinal("ToCurrencyCode")),
+                                reader.GetInt32(reader.GetOrdinal("FromCurrencyCode")),
+                                reader.GetInt32(reader.GetOrdinal("ToCurrencyCode")),
                                 reader.GetDouble(reader.GetOrdinal("Rate")),
                                 reader.GetDateTime(reader.GetOrdinal("EffectiveDate")),
                                 reader.GetDateTime(reader.GetOrdinal("CreatedAt"))
@@ -113,8 +113,8 @@ namespace DataBankLayer
                         {
                             list.Add(new ExchangeRateDTO(
                                 reader.GetInt32(reader.GetOrdinal("RateID")),
-                                reader.GetString(reader.GetOrdinal("FromCurrencyCode")),
-                                reader.GetString(reader.GetOrdinal("ToCurrencyCode")),
+                                reader.GetInt32(reader.GetOrdinal("FromCurrencyCode")),
+                                reader.GetInt32(reader.GetOrdinal("ToCurrencyCode")),
                                 reader.GetDouble(reader.GetOrdinal("Rate")),
                                 reader.GetDateTime(reader.GetOrdinal("EffectiveDate")),
                                 reader.GetDateTime(reader.GetOrdinal("CreatedAt"))
@@ -151,8 +151,8 @@ namespace DataBankLayer
                         {
                             item = new ExchangeRateDTO(
                                 reader.GetInt32(reader.GetOrdinal("RateID")),
-                                reader.GetString(reader.GetOrdinal("FromCurrencyCode")),
-                                reader.GetString(reader.GetOrdinal("ToCurrencyCode")),
+                                reader.GetInt32(reader.GetOrdinal("FromCurrencyCode")),
+                                reader.GetInt32(reader.GetOrdinal("ToCurrencyCode")),
                                 reader.GetDouble(reader.GetOrdinal("Rate")),
                                 reader.GetDateTime(reader.GetOrdinal("EffectiveDate")),
                                 reader.GetDateTime(reader.GetOrdinal("CreatedAt"))

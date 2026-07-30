@@ -15,7 +15,7 @@ namespace DataBankLayer
     {
 
 
-        static public CurrenciesDTO Find(string CurrencyCode)
+        static public CurrenciesDTO Find(int CurrencyID)
         {
            CurrenciesDTO currency = null;
             try
@@ -26,15 +26,17 @@ namespace DataBankLayer
                     using (SqlCommand command = new SqlCommand("sp_Currencies_GetByCode", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@CurrencyCode", CurrencyCode);
+                        command.Parameters.AddWithValue("@CurrencyID", CurrencyID);
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             if (reader.Read())
                             {
+                             
+                                string currencyCode = reader["CurrencyCode"].ToString();
                                 string name = reader["Name"].ToString();
                                 string symbol = reader["Symbol"].ToString();
                                 bool isActive = Convert.ToBoolean(reader["IsActive"]);
-                                currency = new CurrenciesDTO(CurrencyCode, name, symbol, isActive);
+                                currency = new CurrenciesDTO(CurrencyID, currencyCode, name, symbol, isActive);
                             }
                         }
                     }
@@ -124,11 +126,12 @@ namespace DataBankLayer
                         {
                             while (reader.Read())
                             {
+                                int CurrencyID = Convert.ToInt32(reader["CurrencyID"]);
                                 string currencyCode = reader["CurrencyCode"].ToString();
                                 string name = reader["Name"].ToString();
                                 string symbol = reader["Symbol"].ToString();
                                 bool isActive = Convert.ToBoolean(reader["IsActive"]);
-                                CurrenciesDTO currency = new CurrenciesDTO(currencyCode, name, symbol, isActive);
+                                CurrenciesDTO currency = new CurrenciesDTO(CurrencyID, currencyCode, name, symbol, isActive);
                                 currencies.Add(currency);
                             }
                         }
@@ -172,7 +175,7 @@ namespace DataBankLayer
 
         //}
 
-        static public bool DeactivateCurrency(string currencyCode)
+        static public bool DeactivateCurrency(int CurrencyID)
         {
             int rowsAffected=0;
             try
@@ -184,7 +187,7 @@ namespace DataBankLayer
                     using (SqlCommand command = new SqlCommand("sp_Currencies_Delete", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@CurrencyCode", currencyCode);
+                        command.Parameters.AddWithValue("@CurrencyID", CurrencyID);
                          rowsAffected = command.ExecuteNonQuery();
                         return rowsAffected > 0;
                     }

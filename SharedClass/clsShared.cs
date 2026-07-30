@@ -19,20 +19,20 @@ namespace SharedClass
             public int BranchID { get; set; }
             public string AccountNumber { get; set; }
             public byte AccountType { get; set; }
-            public string CurrencyCode { get; set; }
+            public int CurrencyID { get; set; }
             public byte Status { get; set; }
             public bool IsDeleted { get; set; }
             public DateTime CreatedAt { get; private set; }
             public byte[] Row_Version { get; private set; }
             public AccountsDTO(int AccountID, int CustomerID, int BranchID, string AccountNumber, byte AccountType,
-                string CurrencyCode, byte Status, bool IsDeleted, DateTime CreatedAt, byte[] Row_Version)
+                int CurrencyID, byte Status, bool IsDeleted, DateTime CreatedAt, byte[] Row_Version)
             {
                 this.AccountID = AccountID;
                 this.CustomerID = CustomerID;
                 this.BranchID = BranchID;
                 this.AccountNumber = AccountNumber;
                 this.AccountType = AccountType;
-                this.CurrencyCode = CurrencyCode;
+                this.CurrencyID = CurrencyID;
                 this.Status = Status;
                 this.IsDeleted = IsDeleted;
                 this.CreatedAt = CreatedAt;
@@ -112,13 +112,15 @@ namespace SharedClass
 
         public class CurrenciesDTO
         {
+            public int CurrencyID { get; set; }
             public string CurrencyCode { get; set; }
             public string Name { get; set; }
             public string Symbol { get; set; }
             public bool IsActive { get; set; }
 
-            public CurrenciesDTO(string CurrencyCode, string Name, string Symbol, bool IsActive)
+            public CurrenciesDTO(int CurrencyID, string CurrencyCode, string Name, string Symbol, bool IsActive)
             {
+                this.CurrencyID = CurrencyID;
                 this.CurrencyCode = CurrencyCode;
                 this.Name = Name;
                 this.Symbol = Symbol;
@@ -231,15 +233,15 @@ namespace SharedClass
         public class ExchangeRateDTO
         {
             public int RateID { get; set; }
-            public string FromCurrencyCode { get; set; }
-            public string ToCurrencyCode { get; set; }
+            public int FromCurrencyCode { get; set; }
+            public int ToCurrencyCode { get; set; }
             public double Rate { get; set; }
             public DateTime EffectiveDate { get; set; }
             public DateTime CreatedAt { get; }
 
 
 
-            public ExchangeRateDTO(int rateID, string fromCurrencyCode, string toCurrencyCode,
+            public ExchangeRateDTO(int rateID, int fromCurrencyCode, int toCurrencyCode,
                                    double rate, DateTime effectiveDate, DateTime createdAt)
             {
                 this.RateID = rateID;

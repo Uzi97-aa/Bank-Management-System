@@ -1,4 +1,5 @@
 ﻿using BankMangmentSystem.Customer;
+using BankMangmentSystem.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,21 +12,29 @@ using System.Windows.Forms;
 
 namespace BankMangmentSystem
 {
-    public partial class Form1 : Form
+    public partial class frmBankList : Form
     {
-        public Form1()
+
+        frmLogin _Login;
+        public frmBankList(frmLogin login)
+        {
+            InitializeComponent();
+            _Login = login;
+        }
+        public frmBankList()
         {
             InitializeComponent();
         }
-
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        private void frmBankList_Load(object sender, EventArgs e)
         {
-           
+
         }
 
-        private void btnAddUser_Click(object sender, EventArgs e)
+        private void usersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
+           frmListUses frm=new frmListUses();
+            frm.ShowDialog();
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -33,15 +42,15 @@ namespace BankMangmentSystem
 
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void custmoersToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
 
         private void btnAddCustomer_Click(object sender, EventArgs e)
         {
-            frmAddCustomer frmAddCustomer = new frmAddCustomer();
-            frmAddCustomer.ShowDialog();
+            frmAddUpdateCustomer frm=new frmAddUpdateCustomer();
+            frm.ShowDialog();
         }
     }
 }

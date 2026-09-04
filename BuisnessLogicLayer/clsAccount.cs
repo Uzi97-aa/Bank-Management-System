@@ -11,26 +11,28 @@ namespace BuisnessLogicLayer
     {
 
         public  enum enMode { Add = 1, Update = 2 }
-
+        
         enMode Mode = enMode.Add;
+
+        public enum enAccountType { SAVINGS=1, CURRENT=2, FIXED=3 }
         public int AccountID { get; set; }
         public int CustomerID { get; set; }
 
         public int BranchID { get; set; }
         public string AccountNumber { get; set; }
-        public byte AccountType { get; set; }
+        public enAccountType AccountType { get; set; }
         public int CurrencyID { get; set; }
         public byte Status { get; set; }
         public bool IsDeleted { get; set; }
-        public DateTime CreatedAt { get; private set; }
-        public byte[] Row_Version { get; private set; }
+        public DateTime CreatedAt { get; set; }
+        public byte[] Row_Version { get; set; }
 
 
         public AccountsDTO ADTO
         {
             get
             {
-            return new AccountsDTO(this.AccountID, this.CustomerID, this.BranchID, this.AccountNumber, this.AccountType
+            return new AccountsDTO(this.AccountID, this.CustomerID, this.BranchID, this.AccountNumber,(byte)this.AccountType
             ,this.CurrencyID, this.Status, this.IsDeleted, this.CreatedAt, this.Row_Version);
             }
         }
@@ -42,7 +44,7 @@ namespace BuisnessLogicLayer
             this.CustomerID = ADTO.CustomerID;
             this.BranchID = ADTO.BranchID;
             this.AccountNumber = ADTO.AccountNumber;
-            this.AccountType = ADTO.AccountType;
+            this.AccountType = (enAccountType)ADTO.AccountType;
             this.CurrencyID = ADTO.CurrencyID;
             this.Status = ADTO.Status;
             this.IsDeleted = ADTO.IsDeleted;
@@ -50,6 +52,40 @@ namespace BuisnessLogicLayer
             this.Row_Version = ADTO.Row_Version;
             this.Mode = Mode;
         }
+
+
+        static public clsAccount FindByID(int ID)
+        {
+            AccountsDTO ADTO = clsAccounts.GetByID(ID);
+            if (ADTO==null)
+            {
+                return null;
+            }
+            return new clsAccount(ADTO,enMode.Update);
+        }
+         public clsAccount FindID(int ID)
+        {
+            AccountsDTO ADTO = clsAccounts.GetByID(ID);
+            if (ADTO == null)
+            {
+                return null;
+            }
+            return new clsAccount(ADTO, enMode.Update);
+        }
+
+    static    public clsAccount FindByCustomerID(int CustomerID)
+        {
+            AccountsDTO ADTO = clsAccounts.GetByCustomerID(CustomerID);
+            if (ADTO == null)
+            {
+                return null;
+            }
+            return new clsAccount(ADTO, enMode.Update);
+        }
+
+
+     
+
 
         private bool OpenAccount()
         {
@@ -69,10 +105,12 @@ namespace BuisnessLogicLayer
             switch (Mode)
             {
                 case enMode.Add:
-                    if (OpenAccount()) { 
+                    if (OpenAccount())
+                    { 
 
                     Mode = enMode.Update;
-                    return true; }
+                    return true;
+                    }
                     else
                     {
                         return false;

@@ -8,18 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BankMangmentSystem.User
+namespace BankMangmentSystem.Currency
 {
-    public partial class frmAddUser : Form
+    public partial class frmCurrencyList : Form
     {
-        public frmAddUser()
+        public frmCurrencyList()
         {
             InitializeComponent();
-        }
-
-        private void frmAddUser_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

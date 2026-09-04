@@ -42,7 +42,37 @@ namespace DataBankLayer
             return null;
         }
 
-      static  public List<AccountsDTO> GetAll()
+
+        static public AccountsDTO GetByCustomerID(int CustomerID)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(clsConnection.ConnectionString))
+                using (SqlCommand cmd = new SqlCommand("sp_Accounts_GetAccountByCustomerID", conn))
+                {
+                    
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@CustomerID", CustomerID);
+
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    
+                        if (reader.Read())
+                        {
+                            return MapReaderToDTO(reader);
+                        }
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception (e.g., log it)
+            }
+            return null;
+        }
+
+
+        static  public List<AccountsDTO> GetAll()
         {
             List<AccountsDTO> accounts = new List<AccountsDTO>();
 
@@ -183,14 +213,14 @@ namespace DataBankLayer
         private static AccountsDTO MapReaderToDTO(SqlDataReader reader)
         {
             return new AccountsDTO(
-                (int)reader["AccountID"],
-                (int)reader["CustomerID"],
-                (int)reader["BranchID"],
-                reader["AccountNumber"].ToString(), 
-                (byte)reader["AccountType"],
-                (int)reader["CurrencyID"],
-                (byte)reader["Status"],
-                (bool)reader["IsDeleted"], (DateTime)reader["CreatedAt"],
+              reader.GetInt32(reader.GetOrdinal("AccountID")),
+                reader.GetInt32(reader.GetOrdinal("CustomerID")),
+                reader.GetInt32(reader.GetOrdinal("BranchID")),
+              reader.GetString(reader.GetOrdinal("AccountNumber")), 
+                reader.GetByte(reader.GetOrdinal("AccountType")),
+                reader.GetInt32(reader.GetOrdinal("CurrencyID")),
+                reader.GetByte(reader.GetOrdinal("Status")),
+                reader.GetBoolean(reader.GetOrdinal("IsDeleted")), reader.GetDateTime(reader.GetOrdinal("CreatedAt")),
                 (byte[])reader["Row_Version"]
             );
            

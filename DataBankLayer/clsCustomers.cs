@@ -15,7 +15,6 @@ namespace DataBankLayer
     public class clsCustomers
     {
 
-        static public string ConnectionString ="Server=localhost;Database=BankSystem;User Id=sa;Password=sa123456;Encrypt=False;TrustServerCertificate=True;Connection Timeout=30;";
 
 
         static public List<CustomerDTO> GetAllCustomers()
@@ -35,6 +34,9 @@ namespace DataBankLayer
                         while (reader.Read())
                         {
                             string thirdName = reader["ThirdName"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("ThirdName"));
+                            string Email = reader["Email"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("Email"));
+                            string Phone = reader["Phone"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("Phone"));
+                            string Address = reader["Address"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("Address"));
 
                             customers.Add(new CustomerDTO(reader.GetInt32(reader.GetOrdinal("CustomerID"))
                                 , reader.GetString(reader.GetOrdinal("FirstName"))
@@ -71,28 +73,35 @@ namespace DataBankLayer
             CustomerDTO customer = null;
             try
             {
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                using (SqlConnection connection = new SqlConnection(clsConnection.ConnectionString))
                 {
                     using (SqlCommand Command = new SqlCommand("sp_Customers_GetByID", connection))
                     {
+                        connection.Open();
                         Command.CommandType = CommandType.StoredProcedure;
                         Command.Parameters.AddWithValue("@CustomerID", CustomerID);
-                        connection.Open();
+                        
                         SqlDataReader reader = Command.ExecuteReader();
                        
                         if (reader.Read())
                         {
+                            string thirdName = reader["ThirdName"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("ThirdName"));
+                            string Email = reader["Email"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("Email"));
+                            string Phone = reader["Phone"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("Phone"));
+                            string Address = reader["Address"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("Address"));
+
+
                             customer = new CustomerDTO(reader.GetInt32(reader.GetOrdinal("CustomerID"))
                                 , reader.GetString(reader.GetOrdinal("FirstName"))
                                 , reader.GetString(reader.GetOrdinal("SecondName"))
-                                , reader.GetString(reader.GetOrdinal("ThirdName"))
+                                , thirdName
                                 , reader.GetString(reader.GetOrdinal("LastName"))
-                                , reader.GetInt16(reader.GetOrdinal("Gender"))
+                                , reader.GetByte(reader.GetOrdinal("Gender"))
                                 , reader.GetDateTime(reader.GetOrdinal("DateOfBirth"))
                                 , reader.GetString(reader.GetOrdinal("NationalID"))
-                                , reader.GetString(reader.GetOrdinal("Email"))
-                                , reader.GetString(reader.GetOrdinal("Phone"))
-                                , reader.GetString(reader.GetOrdinal("Address"))
+                                , Email
+                                , Phone
+                                , Address
                                 , reader.GetBoolean(reader.GetOrdinal("IsDeleted"))
                                 , reader.GetDateTime(reader.GetOrdinal("CreatedAt"))
                                 , (byte[])reader["Row_Version"]);
@@ -108,6 +117,157 @@ namespace DataBankLayer
             return customer;
         }
 
+
+        static public CustomerDTO GetCustomerByAccountID(int AccountID)
+        {
+            CustomerDTO customer = null;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(clsConnection.ConnectionString))
+                {
+                    using (SqlCommand Command = new SqlCommand("sp_Customers_FindByAccountID", connection))
+                    {
+                        connection.Open();
+                        Command.CommandType = CommandType.StoredProcedure;
+                        Command.Parameters.AddWithValue("@AccountID", AccountID);
+                       
+                        SqlDataReader reader = Command.ExecuteReader();
+
+                        if (reader.Read())
+                        {
+                            string thirdName = reader["ThirdName"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("ThirdName"));
+                            string Email = reader["Email"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("Email"));
+                            string Phone = reader["Phone"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("Phone"));
+                            string Address = reader["Address"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("Address"));
+
+
+                            customer = new CustomerDTO(reader.GetInt32(reader.GetOrdinal("CustomerID"))
+                                , reader.GetString(reader.GetOrdinal("FirstName"))
+                                , reader.GetString(reader.GetOrdinal("SecondName"))
+                                , thirdName
+                                , reader.GetString(reader.GetOrdinal("LastName"))
+                                , reader.GetByte(reader.GetOrdinal("Gender"))
+                                , reader.GetDateTime(reader.GetOrdinal("DateOfBirth"))
+                                , reader.GetString(reader.GetOrdinal("NationalID"))
+                                , Email
+                                , Phone
+                                , Address
+                                , reader.GetBoolean(reader.GetOrdinal("IsDeleted"))
+                                , reader.GetDateTime(reader.GetOrdinal("CreatedAt"))
+                                , (byte[])reader["Row_Version"]);
+
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+            }
+            return customer;
+        }
+
+        static public CustomerDTO GetCustomerByNationalID(string NationalID)
+        {
+            CustomerDTO customer = null;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(clsConnection.ConnectionString))
+                {
+                    using (SqlCommand Command = new SqlCommand("sp_Customers_GetByNationalID", connection))
+                    {
+                        connection.Open();
+                        Command.CommandType = CommandType.StoredProcedure;
+                        Command.Parameters.AddWithValue("@NationalID", NationalID);
+                        
+                        SqlDataReader reader = Command.ExecuteReader();
+
+                        if (reader.Read())
+                        {
+                            string thirdName = reader["ThirdName"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("ThirdName"));
+                            string Email = reader["Email"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("Email"));
+                            string Phone = reader["Phone"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("Phone"));
+                            string Address = reader["Address"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("Address"));
+
+
+
+                            customer = new CustomerDTO(reader.GetInt32(reader.GetOrdinal("CustomerID"))
+                                , reader.GetString(reader.GetOrdinal("FirstName"))
+                                , reader.GetString(reader.GetOrdinal("SecondName"))
+                                , thirdName
+                                , reader.GetString(reader.GetOrdinal("LastName"))
+                                , reader.GetByte(reader.GetOrdinal("Gender"))
+                                , reader.GetDateTime(reader.GetOrdinal("DateOfBirth"))
+                                , reader.GetString(reader.GetOrdinal("NationalID"))
+                                , Email
+                                , Phone
+                                , Address
+                                , reader.GetBoolean(reader.GetOrdinal("IsDeleted"))
+                                , reader.GetDateTime(reader.GetOrdinal("CreatedAt"))
+                                , (byte[])reader["Row_Version"]);
+
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+            }
+            return customer;
+        }
+
+        static public CustomerDTO FindCustomerByFullName(string FirstName,string SecondName,string LastName)
+        {
+            CustomerDTO customer = null;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(clsConnection.ConnectionString))
+                {
+                    using (SqlCommand Command = new SqlCommand("sp_Customers_FindByFullName", connection))
+                    {
+                        Command.CommandType = CommandType.StoredProcedure;
+                        Command.Parameters.AddWithValue("@FirstName", FirstName);
+                        Command.Parameters.AddWithValue("@SecondName", SecondName);
+                        Command.Parameters.AddWithValue("@LastName", LastName);
+
+                        connection.Open();
+                        SqlDataReader reader = Command.ExecuteReader();
+
+                        if (reader.Read())
+                        {
+
+                            string thirdName = reader["ThirdName"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("ThirdName"));
+                            string Email = reader["Email"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("Email"));
+                            string Phone = reader["Phone"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("Phone"));
+                            string Address = reader["Address"] == DBNull.Value ? "" : reader.GetString(reader.GetOrdinal("Address"));
+
+
+                            customer = new CustomerDTO(reader.GetInt32(reader.GetOrdinal("CustomerID"))
+                                , reader.GetString(reader.GetOrdinal("FirstName"))
+                                , reader.GetString(reader.GetOrdinal("SecondName"))
+                                , thirdName
+                                , reader.GetString(reader.GetOrdinal("LastName"))
+                                , reader.GetByte(reader.GetOrdinal("Gender"))
+                                , reader.GetDateTime(reader.GetOrdinal("DateOfBirth"))
+                                , reader.GetString(reader.GetOrdinal("NationalID"))
+                                , Email
+                                , Phone
+                                , Address
+                                , reader.GetBoolean(reader.GetOrdinal("IsDeleted"))
+                                , reader.GetDateTime(reader.GetOrdinal("CreatedAt"))
+                                , (byte[])reader["Row_Version"]);
+
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+            }
+            return customer;
+        }
 
         static public int AddNewCustomer(CustomerDTO CTDO)
         {
@@ -166,7 +326,7 @@ namespace DataBankLayer
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                using (SqlConnection connection = new SqlConnection(clsConnection.ConnectionString))
                 {
                     using (SqlCommand Comand = new SqlCommand("sp_Customers_Update", connection))
                     {
@@ -198,7 +358,7 @@ namespace DataBankLayer
             int RowEffect = 0;
             try
             {
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                using (SqlConnection connection = new SqlConnection(clsConnection.ConnectionString))
                 {
                     using (SqlCommand Comand = new SqlCommand("sp_Customers_Delete", connection))
                     {

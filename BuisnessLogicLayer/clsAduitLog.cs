@@ -13,16 +13,18 @@ namespace BuisnessLogicLayer
 
         enMode Mode = enMode.Create;
 
+        public enum enActionType { CREATE = 1, UPDATE = 2, DELETE = 3, TRANSACTION = 4, LOGIN = 5 }
+
         public int LogID { get; set; }
         public int UserID { get; set; }
-        public short ActionType { get; set; }     // 1 : CREATE , 2 : UPDATE , 3 : DELETE , 4 : TRANSACTION , 5 : LOGIN
+        public enActionType ActionType { get; set; }     // 1 : CREATE , 2 : UPDATE , 3 : DELETE , 4 : TRANSACTION , 5 : LOGIN
         public short EntityTypeID { get; set; }
         public int EntityID { get; set; }
         public string OldValue { get; set; }
         public string NewValue { get; set; }
         public string IPAddress { get; set; }
 
-        public AuditLogDTO ALDTO { get { return new AuditLogDTO(this.LogID, this.UserID, this.ActionType, this.EntityTypeID,
+        public AuditLogDTO ALDTO { get { return new AuditLogDTO(this.LogID, this.UserID, (short)this.ActionType, this.EntityTypeID,
              this.EntityID, this.OldValue, this.NewValue, this.IPAddress);
             }
         }
@@ -31,7 +33,7 @@ namespace BuisnessLogicLayer
         {
             this.LogID = ALDTO.LogID;
             this.UserID = ALDTO.UserID;
-            this.ActionType = ALDTO.ActionType;
+            this.ActionType = (enActionType)ALDTO.ActionType;
             this.EntityTypeID = ALDTO.EntityTypeID;
             this.EntityID = ALDTO.EntityID;
             this.OldValue = ALDTO.OldValue;

@@ -13,6 +13,39 @@ namespace DataBankLayer
     public class clsBalances
     {
 
+        static public DataTable GetBalancesDT()
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(clsConnection.ConnectionString))
+                {
+                    conn.Open();
+                    string query = @"SELECT [AccountID]
+                                  ,[AccountNumber]
+                                  ,[CurrencyCode]
+                                  ,[balance]
+                              FROM [dbo].[account_balances]";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                dt.Load(reader);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions (e.g., log the error)
+               // Console.WriteLine("Error fetching balances: " + ex.Message);
+            }
+            return dt;
+        }
+
 
         static public List<BalanceDTO> GetBalances()
         {

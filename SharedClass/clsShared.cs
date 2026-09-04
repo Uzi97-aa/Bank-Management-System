@@ -24,6 +24,8 @@ namespace SharedClass
             public bool IsDeleted { get; set; }
             public DateTime CreatedAt { get; private set; }
             public byte[] Row_Version { get; private set; }
+
+            
             public AccountsDTO(int AccountID, int CustomerID, int BranchID, string AccountNumber, byte AccountType,
                 int CurrencyID, byte Status, bool IsDeleted, DateTime CreatedAt, byte[] Row_Version)
             {
@@ -150,7 +152,7 @@ namespace SharedClass
 
             public byte[] Row_Version { get; set; }
 
-
+            
             public CustomerDTO(int customerID, string firstName, string secondName, string thirdName, string lastName, short gender, DateTime dateOfBirth
                 , string nationalID, string email
                 , string phone, string address, bool isDeleted, DateTime createdAt, byte[] row_Version)
@@ -326,12 +328,14 @@ namespace SharedClass
             public string PasswordHash { get; set; }
             public byte Role { get; set; } // 1: Customer, 2: Employee, 3: Admin
             public bool IsDeleted { get; set; }
+            public bool IsActive { get; set; }
             public DateTime CreatedAt { get; set; }
             public byte[] Row_Version { get; }
 
 
-            public UserDTO(int userID, int? customerID, int? employeeID, string userName, string passwordHash, byte role, bool isDeleted,
-                DateTime createdAt)
+            public UserDTO(int userID, int? customerID, int? employeeID, string userName,
+                string passwordHash, byte role, bool isDeleted,bool IsActive,
+                DateTime createdAt, byte[] Row_Version)
             {
                 this.UserID = userID;
                 this.CustomerID = customerID;
@@ -340,8 +344,9 @@ namespace SharedClass
                 this.PasswordHash = passwordHash;
                 this.Role = role;
                 this.IsDeleted = isDeleted;
+                this.IsActive=IsActive;
                 this.CreatedAt = createdAt;
-
+                this.Row_Version= Row_Version;
 
 
             }

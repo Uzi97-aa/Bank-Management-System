@@ -1,4 +1,6 @@
-﻿using BankMangmentSystem.Customer;
+﻿using BankMangmentSystem.Account;
+using BankMangmentSystem.Customer;
+using BankMangmentSystem.Transfer;
 using BankMangmentSystem.User;
 using System;
 using System.Collections.Generic;
@@ -50,6 +52,18 @@ namespace BankMangmentSystem
         private void btnAddCustomer_Click(object sender, EventArgs e)
         {
             frmAddUpdateCustomer frm=new frmAddUpdateCustomer();
+            frm.ShowDialog();
+        }
+
+        private void transferToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmTransfer frm=new frmTransfer();
+            frm.ShowDialog();
+        }
+
+        private void accountsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAddUpdateAccount frm=new frmAddUpdateAccount();
             frm.ShowDialog();
         }
     }

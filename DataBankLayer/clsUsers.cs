@@ -164,13 +164,82 @@ namespace DataBankLayer
             {
                 // Handle exception (e.g., log it)
                 // Console.WriteLine("An error occurred: " + ex.Message);
-                return User; // Return null in case of error
+                // Return null in case of error
             }
+            return User;
         }
 
 
+        static public UserDTO GetUserByEmployeeID(int EmployeeID)
+        {
+
+            UserDTO User = null;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(clsConnection.ConnectionString))
+                {
+                    using (SqlCommand Command = new SqlCommand("sp_Users_GetByEmployeeID", connection))
+                    {
+                        Command.CommandType = CommandType.StoredProcedure;
+                        Command.Parameters.AddWithValue("@EmployeeID", EmployeeID);
+                        connection.Open();
+                        using (SqlDataReader reader = Command.ExecuteReader(CommandBehavior.SingleRow))
+                        {
+                            if (reader.Read())
+                            {
+                                return MapReaderToDTO(reader);
+                            }
+                            return null;
+                        }
+                    }
+                }
 
 
+            }
+            catch (Exception ex)
+            {
+                // Handle exception (e.g., log it)
+                // Console.WriteLine("An error occurred: " + ex.Message);
+                 // Return null in case of error
+            }
+            return User;
+        }
+
+        static public UserDTO GetUserByCustomerID(int CustomerID)
+        {
+            UserDTO User = null;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(clsConnection.ConnectionString))
+                {
+                    using (SqlCommand Command = new SqlCommand("sp_Users_GetByCustomerID", connection))
+                    {
+                        Command.CommandType = CommandType.StoredProcedure;
+                        Command.Parameters.AddWithValue("@CustomerID", CustomerID);
+                        connection.Open();
+                        using (SqlDataReader reader = Command.ExecuteReader(CommandBehavior.SingleRow))
+                        {
+                            if (reader.Read())
+                            {
+                                return MapReaderToDTO(reader);
+                            }
+                            return null;
+                        }
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                // Handle exception (e.g., log it)
+                // Console.WriteLine("An error occurred: " + ex.Message);
+                // Return null in case of error
+            }
+            return User;
+
+
+        }
 
         // GetUserByUserNameAndPassword
         static public UserDTO GetUserByUserNameAndPassword(string UserName, string Password)

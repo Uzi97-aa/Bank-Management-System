@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -24,6 +25,7 @@ namespace BuisnessLogicLayer
 
         public clsCurrency(CurrenciesDTO CDTO, enMode Mode=enMode.Add)
         {
+            this.CurrencyID = CDTO.CurrencyID;
             this.CurrencyCode = CDTO.CurrencyCode;
             this.Name = CDTO.Name;
             this.Symbol = CDTO.Symbol;
@@ -87,6 +89,13 @@ namespace BuisnessLogicLayer
         {
             return clsCurrencies.GetAllCurrencies();
         }
+
+
+        static public DataTable GetAllCurrencies()
+        {
+           return clsCurrencies.GetAllCurrenciesDatatable();
+        }
+
 
     }
 }

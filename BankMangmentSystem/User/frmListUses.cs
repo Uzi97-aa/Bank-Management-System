@@ -162,7 +162,7 @@ namespace BankMangmentSystem.User
             }
 
             //Reset the filters in case nothing selected or filter value conains nothing.
-            if (txtFilterValue.FastText.Trim() == "" || FilterColumn == "Select")
+            if (txtValue.Text.Trim() == "" || FilterColumn == "Select")
             {
                 _dtUsers.DefaultView.RowFilter = "";
                 lblRecord.Text = dgvUserList.Rows.Count.ToString();
@@ -172,9 +172,9 @@ namespace BankMangmentSystem.User
 
             if (FilterColumn != "FullName" && FilterColumn != "UserName")
                 //in this case we deal with numbers not string.
-                _dtUsers.DefaultView.RowFilter = string.Format("[{0}] = {1}", FilterColumn, txtFilterValue.Text.Trim());
+                _dtUsers.DefaultView.RowFilter = string.Format("[{0}] = {1}", FilterColumn, txtValue.Text.Trim());
             else
-                _dtUsers.DefaultView.RowFilter = string.Format("[{0}] LIKE '{1}%'", FilterColumn, txtFilterValue.Text.Trim());
+                _dtUsers.DefaultView.RowFilter = string.Format("[{0}] LIKE '{1}%'", FilterColumn, txtValue.Text.Trim());
 
             lblRecord.Text = dgvUserList.Rows.Count.ToString();
         }

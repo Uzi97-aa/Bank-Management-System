@@ -14,6 +14,7 @@ namespace BuisnessLogicLayer
         
         enMode Mode = enMode.Add;
 
+        public enum enStatus { Active = 1, Inactive = 2, Closed = 3 }  //--1 : ACTIVE , 2 : FROZEN , 3 : CLOSED
         public enum enAccountType { SAVINGS=1, CURRENT=2, FIXED=3 }
         public int AccountID { get; set; }
         public int CustomerID { get; set; }
@@ -22,7 +23,7 @@ namespace BuisnessLogicLayer
         public string AccountNumber { get; set; }
         public enAccountType AccountType { get; set; }
         public int CurrencyID { get; set; }
-        public byte Status { get; set; }
+        public enStatus Status { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime CreatedAt { get; set; }
         public byte[] Row_Version { get; set; }
@@ -33,7 +34,7 @@ namespace BuisnessLogicLayer
             get
             {
             return new AccountsDTO(this.AccountID, this.CustomerID, this.BranchID, this.AccountNumber,(byte)this.AccountType
-            ,this.CurrencyID, this.Status, this.IsDeleted, this.CreatedAt, this.Row_Version);
+            ,this.CurrencyID,(byte) this.Status, this.IsDeleted, this.CreatedAt, this.Row_Version);
             }
         }
 
@@ -46,7 +47,7 @@ namespace BuisnessLogicLayer
             this.AccountNumber = ADTO.AccountNumber;
             this.AccountType = (enAccountType)ADTO.AccountType;
             this.CurrencyID = ADTO.CurrencyID;
-            this.Status = ADTO.Status;
+            this.Status =(enStatus) ADTO.Status;
             this.IsDeleted = ADTO.IsDeleted;
             this.CreatedAt = ADTO.CreatedAt;
             this.Row_Version = ADTO.Row_Version;
@@ -73,7 +74,7 @@ namespace BuisnessLogicLayer
             return new clsAccount(ADTO, enMode.Update);
         }
 
-    static    public clsAccount FindByCustomerID(int CustomerID)
+    static  public clsAccount FindByCustomerID(int CustomerID)
         {
             AccountsDTO ADTO = clsAccounts.GetByCustomerID(CustomerID);
             if (ADTO == null)
@@ -117,7 +118,7 @@ namespace BuisnessLogicLayer
                     }
                 case enMode.Update:
                             return UpdateAccount();
-                        default:
+                default:
                             return false;
                         }
             

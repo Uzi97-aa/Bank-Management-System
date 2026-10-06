@@ -7,15 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using BuisnessLogicLayer;
 namespace BankMangmentSystem.Transfer
 {
     public partial class frmTransfer : Form
     {
-        int _CustomerID1;
-        int _CustomerID2;
-
-
+        clsTransactionGroup _Transfer1;
+        clsTransactionGroup _Transfer2;
+        clsUser _User1;
+        clsUser _User2;
         public frmTransfer()
         {
             InitializeComponent();
@@ -23,26 +23,63 @@ namespace BankMangmentSystem.Transfer
 
         private void frmTransfer_Load(object sender, EventArgs e)
         {
-
+            ctrlUserWithFilter1.DataBack += CtrlUserWithFilter1_DataBack;
+            ctrlUserWithFilter2.DataBack += CtrlUserWithFilter2_DataBack;
         }
 
-        private void ctrlTransform1_Load(object sender, EventArgs e)
+        private void CtrlUserWithFilter1_DataBack(object sender, clsUser user)
         {
+            _User1 = user;
             
         }
 
-        private void ctrlTransform1_DataBack(object sender, int CustomerID)
+        private void CtrlUserWithFilter2_DataBack(object sender, clsUser user)
         {
-            _CustomerID1 = CustomerID;
+            _User2 = user;
         }
 
-        private void ctrlTransform2_DataBack(object sender, int CustomerID)
+        private void FilledTransferDetails()
         {
-            _CustomerID2 = CustomerID;
+            if (_User1 == null || _User2 == null)
+            {
+                MessageBox.Show("Please select both users before transferring.", "Error", MessageBoxButtons.OK);
+                return;
+            }
+            if (_User1.UserID == _User2.UserID)
+            {
+                MessageBox.Show("Don't Play With Your Tail :-) , Cannot transfer to the same user.", "Error", MessageBoxButtons.OK);
+                return;
+            }
+            if (_User1.UserID==10)
+            {
+                string Description = $"Transfer from {_User1.UserName} to {_User2.UserName}";
+                int CreatedByUserID = _User1.UserID;
+                int BranchID = 3;
+                int? ExchangeRateID = null;
+            }
+            
+
         }
 
-        private void fuiButton1_Click(object sender, EventArgs e)
+        private void AddNewTransfer()
         {
+          
+            
+            
+
+        }
+        private void btnTransfer_Click(object sender, EventArgs e)
+        {
+            if (_User1 == null || _User2 == null)
+            {
+                MessageBox.Show("Please select both users before transferring.","Error",MessageBoxButtons.OK);
+                return;
+            }
+            if (_User1.UserID == _User2.UserID)
+            {
+                MessageBox.Show("Don't Play With Your Tail :-) , Cannot transfer to the same user.", "Error", MessageBoxButtons.OK);
+                return;
+            }
 
         }
     }

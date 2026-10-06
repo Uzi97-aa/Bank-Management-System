@@ -94,6 +94,31 @@ namespace BuisnessLogicLayer
 
         }
 
+        static public clsUser FindByEmployeeID(int EmployeeID)
+        {
+            UserDTO UDTO = clsUsers.GetUserByEmployeeID(EmployeeID);
+            if (UDTO == null)
+            {
+                return null;
+            }
+            return new clsUser(UDTO, enMode.Update);
+
+
+        }
+
+        static public clsUser FindByCustomerID(int CustomerID)
+        {
+            UserDTO UDTO = clsUsers.GetUserByCustomerID(CustomerID);
+            if (UDTO == null)
+            {
+                return null;
+            }
+            return new clsUser(UDTO, enMode.Update);
+
+
+        }
+
+
         static public clsUser FindByUserNameAndPassword(string UserName,string Password)
         {
             UserDTO UDTO=clsUsers.GetUserByUserNameAndPassword(UserName, Password);
@@ -180,10 +205,10 @@ namespace BuisnessLogicLayer
 
 
          static public DataTable GetAllUser() 
-        { 
+         { 
             DataTable dt = clsUsers.GetAllUsers();
             return dt;
-        }
+         }
 
 
 

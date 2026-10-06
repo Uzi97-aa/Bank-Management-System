@@ -74,6 +74,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account\Controls\ctrlAccount.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Account\Controls\ctrlAccount.Designer.cs">
+      <DependentUpon>ctrlAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Account\frmAddUpdateAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Account\frmAddUpdateAccount.Designer.cs">
+      <DependentUpon>frmAddUpdateAccount.cs</DependentUpon>
+    </Compile>
     <Compile Include="Currency\frmCurrencyList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,10 +98,10 @@
     <Compile Include="Customer\frmAddUpdateCustomer.Designer.cs">
       <DependentUpon>frmAddUpdateCustomer.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmAccount.cs">
+    <Compile Include="Account\frmAccount.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmAccount.Designer.cs">
+    <Compile Include="Account\frmAccount.Designer.cs">
       <DependentUpon>frmAccount.cs</DependentUpon>
     </Compile>
     <Compile Include="Currency\frmCurrency.cs">
@@ -113,11 +125,11 @@
     <Compile Include="Global Classes\clsGlobal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Transfer\Controls\ctrlTransform.cs">
+    <Compile Include="Customer\Control\ctrlCustomer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Transfer\Controls\ctrlTransform.Designer.cs">
-      <DependentUpon>ctrlTransform.cs</DependentUpon>
+    <Compile Include="Customer\Control\ctrlCustomer.Designer.cs">
+      <DependentUpon>ctrlCustomer.cs</DependentUpon>
     </Compile>
     <Compile Include="Transfer\frmTransfer.cs">
       <SubType>Form</SubType>
@@ -131,6 +143,12 @@
     <Compile Include="User\Controls\ctrlUser.Designer.cs">
       <DependentUpon>ctrlUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="User\Controls\ctrlUserWithFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User\Controls\ctrlUserWithFilter.Designer.cs">
+      <DependentUpon>ctrlUserWithFilter.cs</DependentUpon>
+    </Compile>
     <Compile Include="User\frmAddUpdateUser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -143,10 +161,19 @@
     <Compile Include="User\frmListUses.Designer.cs">
       <DependentUpon>frmListUses.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Account\Controls\ctrlAccount.resx">
+      <DependentUpon>ctrlAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Account\frmAddUpdateAccount.resx">
+      <DependentUpon>frmAddUpdateAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Currency\frmCurrencyList.resx">
+      <DependentUpon>frmCurrencyList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Customer\frmAddUpdateCustomer.resx">
       <DependentUpon>frmAddUpdateCustomer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmAccount.resx">
+    <EmbeddedResource Include="Account\frmAccount.resx">
       <DependentUpon>frmAccount.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmBankList.resx">
@@ -165,14 +192,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Transfer\Controls\ctrlTransform.resx">
-      <DependentUpon>ctrlTransform.cs</DependentUpon>
+    <EmbeddedResource Include="Customer\Control\ctrlCustomer.resx">
+      <DependentUpon>ctrlCustomer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Transfer\frmTransfer.resx">
       <DependentUpon>frmTransfer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="User\Controls\ctrlUser.resx">
       <DependentUpon>ctrlUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User\Controls\ctrlUserWithFilter.resx">
+      <DependentUpon>ctrlUserWithFilter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="User\frmAddUpdateUser.resx">
       <DependentUpon>frmAddUpdateUser.cs</DependentUpon>

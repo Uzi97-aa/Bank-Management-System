@@ -147,13 +147,47 @@ namespace DataBankLayer
         }
 
 
+
+        static public DataTable GetAllCurrenciesDatatable()
+        {
+            DataTable currencies = new DataTable();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(clsConnection.ConnectionString))
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand("sp_Currencies_GetAll", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                currencies.Load(reader);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception (e.g., log it)
+                throw;
+            }
+            return currencies;
+        }
+
+
+
+
         //static public CurrenciesDTO GetCurrencyByCode(string currencyCode)
         //{
         //    CurrenciesDTO currency = null;
         //    using (SqlConnection connection = new SqlConnection(clsConnection.ConnectionString))
         //    {
         //        connection.Open();
-               
+
         //        using (SqlCommand command = new SqlCommand(query, connection))
         //        {
         //            command.CommandType = CommandType.StoredProcedure;

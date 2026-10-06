@@ -1,11 +1,12 @@
-﻿using System;
+﻿using SharedClass;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SharedClass;
+using System.Windows.Input;
 using static SharedClass.clsShared;
 namespace DataBankLayer
 {
@@ -112,12 +113,17 @@ namespace DataBankLayer
                         cmd.Parameters.AddWithValue("@AccountType", account.AccountType);
                         cmd.Parameters.AddWithValue("@CurrencyID", account.CurrencyID);
                         cmd.Parameters.AddWithValue("@Status", account.Status);
-                        cmd.Parameters.AddWithValue("@IsDeleted", account.IsDeleted);
 
-                       
+                        var outputIdParam = new SqlParameter("@AccountID", SqlDbType.Int)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        cmd.Parameters.Add(outputIdParam);
 
-                        // Get newly created ID
-                        row= Convert.ToInt32(cmd.ExecuteScalar());
+
+                        cmd.ExecuteNonQuery();
+
+                        return (int)outputIdParam.Value;
                     }
                 }
             }
@@ -142,7 +148,7 @@ namespace DataBankLayer
 
                         Commad.Parameters.AddWithValue("@AccountID", ADTO.AccountID);                        
                         Commad.Parameters.AddWithValue("@Status", ADTO.Status);                       
-                        Commad.Parameters.AddWithValue("@Row_Version", ADTO.Row_Version);
+                        Commad.Parameters.AddWithValue("@RowVersion", ADTO.Row_Version);
 
                         connection.Open();
                         Commad.ExecuteNonQuery();
@@ -220,11 +226,19 @@ namespace DataBankLayer
                 reader.GetByte(reader.GetOrdinal("AccountType")),
                 reader.GetInt32(reader.GetOrdinal("CurrencyID")),
                 reader.GetByte(reader.GetOrdinal("Status")),
-                reader.GetBoolean(reader.GetOrdinal("IsDeleted")), reader.GetDateTime(reader.GetOrdinal("CreatedAt")),
+                reader.GetBoolean(reader.GetOrdinal("IsDeleted")), 
+                reader.GetDateTime(reader.GetOrdinal("CreatedAt")),
                 (byte[])reader["Row_Version"]
             );
            
         }
+
+
+
+       
+
+
+
     }
 
 

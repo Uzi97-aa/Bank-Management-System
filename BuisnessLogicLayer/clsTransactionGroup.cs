@@ -22,7 +22,7 @@ namespace BuisnessLogicLayer
 
         public string Description { get; set; }
         public TransactionGroupStatus Status { get; set; }
-        public int ExchangeRateID { get; set; }
+        public int? ExchangeRateID { get; set; }
         public DateTime CreatedAt { get; set; }
         public int CreatedByUserID { get; set; }
         public int BranchID { get; set; }
@@ -33,7 +33,7 @@ namespace BuisnessLogicLayer
         {
             get
             {
-                return new TransactionGroupsDTO(this.GroupoID, this.Description, (byte)this.Status, this.ExchangeRateID,
+                return new TransactionGroupsDTO(this.GroupoID, this.Description, (byte)this.Status, this.ExchangeRateID.Value,
                     this.CreatedAt, this.CreatedByUserID, this.BranchID, this.Row_Version);
             }
         }

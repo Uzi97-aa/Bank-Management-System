@@ -12,9 +12,9 @@ using BuisnessLogicLayer;
 
 namespace BankMangmentSystem.Transfer.Controls
 {
-    public partial class ctrlTransform : UserControl
+    public partial class ctrlCustomer : UserControl
     {
-        
+
         clsCustomer _Customer;
 
         clsAccount _Account;
@@ -30,7 +30,7 @@ namespace BankMangmentSystem.Transfer.Controls
         string _NationalID;
 
         int? _AccountID;
-        public ctrlTransform()
+        public ctrlCustomer()
         {
             InitializeComponent();
         }
@@ -38,12 +38,12 @@ namespace BankMangmentSystem.Transfer.Controls
 
         private void SelectComboBox()
         {
-            if(cbSelect.SelectedItem=="CustomerID")
+            if (cbSelect.SelectedItem == "CustomerID")
             {
-              
-                txtInput.InputType= FastUI.FastUILibrary.Core.FastInputType.IntegerOnly;
-                _CustomerID =int.Parse(txtInput.FastText);
-             
+
+                txtInput.InputType = FastUI.FastUILibrary.Core.FastInputType.IntegerOnly;
+                _CustomerID = int.Parse(txtInput.FastText);
+
 
             }
 
@@ -68,13 +68,13 @@ namespace BankMangmentSystem.Transfer.Controls
             }
         }
 
-        
+
         private void FindCustomer()
         {
             SelectComboBox();
-            if (_CustomerID<0||_AccountID<0)
+            if (_CustomerID < 0 || _AccountID < 0)
             {
-                MessageBox.Show("Input Correct Number","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show("Input Correct Number", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -97,11 +97,11 @@ namespace BankMangmentSystem.Transfer.Controls
                     MessageBox.Show("Input Correct Number", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                txtCustomerID.FastText ="Customer ID :"+ _CustomerID.Value.ToString();
-                txtFullName.FastText = "Full Name :"+ _Customer.FullName;
-                txtDateOfBith.FastText="Date Of Birth :"+_Customer.DateOfBirth.ToString();
-                txtNationalID.FastText="National ID :"+_Customer.NationalID.ToString();
-                txtAccountID.FastText="Account ID :"+ _Account.AccountID.ToString();
+                txtCustomerID.FastText = "Customer ID :" + _CustomerID.Value.ToString();
+                txtFullName.FastText = "Full Name :" + _Customer.FullName;
+                txtDateOfBith.FastText = "Date Of Birth :" + _Customer.DateOfBirth.ToString();
+                txtNationalID.FastText = "National ID :" + _Customer.NationalID.ToString();
+                txtAccountID.FastText = "Account ID :" + _Account.AccountID.ToString();
 
                 _CustomerID = _CustomerID.Value;
                 return;
@@ -117,7 +117,7 @@ namespace BankMangmentSystem.Transfer.Controls
                     return;
                 }
                 _Account = clsAccount.FindByCustomerID(_Customer.CustomerID);
-                if (_Account==null)
+                if (_Account == null)
                 {
                     MessageBox.Show("Input Correct Number", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -178,7 +178,7 @@ namespace BankMangmentSystem.Transfer.Controls
         private void ctrlTransform_Load(object sender, EventArgs e)
         {
 
-          txtInput.FastText="";
+            txtInput.FastText = "";
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -193,7 +193,7 @@ namespace BankMangmentSystem.Transfer.Controls
 
         private void txtInput_Click(object sender, EventArgs e)
         {
-            if (cbSelect.SelectedItem=="")
+            if (cbSelect.SelectedItem == "")
             {
                 MessageBox.Show("Select Search Type", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
